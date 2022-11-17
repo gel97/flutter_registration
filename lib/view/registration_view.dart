@@ -126,7 +126,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                           password: passwordCtrlr.text);
 
                       await apiReg.register(_dto).then((value) {
-                        print(_dto);
+                        print(value.toString());
+                      }, onError: (error) {
+                        print(error.toString());
                       });
                     })
               ],
