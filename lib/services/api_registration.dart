@@ -4,7 +4,7 @@ import '../model/dto_credentials.dart';
 
 class ApiRegistration {
   final Dio _dio = Dio(BaseOptions(
-      baseUrl: "http://172.16.26.105/flutter-training/",
+      baseUrl: "http://172.16.26.60/flutter-training/",
       connectTimeout: 1000 * 100));
   Future<String> register(DtoCredentials dto) async {
     final String path = "api/PersonalInfo/PostUser";

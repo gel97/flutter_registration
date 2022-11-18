@@ -5,6 +5,7 @@ import 'package:sample/view/registration_view.dart';
 
 import '../components/app_button.dart';
 import '../components/app_textfield.dart';
+import '../provider/bloc_provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -14,10 +15,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<LoginView> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordContoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final logBloc = BlocProvider.of(context)!.loginBloc;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,13 +31,13 @@ class _MyWidgetState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppTextField(
-              controller: usernameController,
+              controller: logBloc.usernameController,
               hintText: 'Username',
               myIcon: Icon(Icons.person),
               obscureText: false,
             ),
             AppTextField(
-              controller: passwordContoller,
+              controller: logBloc.passwordContoller,
               hintText: 'Password',
               myIcon: Icon(Icons.key),
               obscureText: true,
@@ -46,7 +46,25 @@ class _MyWidgetState extends State<LoginView> {
               height: 10,
             ),
             AppButton(
-              onpressed: () {},
+              onpressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                          child: FutureBuilder(
+                              future: logBloc.login(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(snapshot.hasData.toString());
+                                } else if (snapshot.hasError) {
+                                  return Text(snapshot.hasError.toString());
+                                } else {
+                                  return SingleChildScrollView(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              }),
+                        ));
+              },
               title: 'Login',
             ),
             const SizedBox(
