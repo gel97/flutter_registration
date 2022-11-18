@@ -11,7 +11,7 @@ class ApiRegistration {
 
     try {
       final resp = await _dio.post(path, data: dto);
-      return resp.data;
+      return resp.data.toString();
     } catch (e) {
       return e.toString();
     }
