@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sample/provider/bloc/test_bloc.dart';
+import 'package:sample/provider/bloc_provider.dart';
+import 'package:sample/view/home_view.dart';
 import 'package:sample/view/sample.dart';
 import 'package:sample/view/login_view.dart';
 
@@ -11,13 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      testBloc: TestBloc(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: HomeView(),
       ),
-      home: LoginView(),
     );
   }
 }
